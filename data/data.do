@@ -70,6 +70,25 @@ label variable undefined_lags "Missing lags for y" // TODO: Update label when we
 local base = "nonmissing":`: value label undefined_lags'
 fvset base `base' undefined_lags
 
+// Generate an exposure variable. We anticipated in the SAP having start and
+// end times for the measurements to define the exposures, but we only have
+// timestamps. We will therefore compute the exposures in the same way as
+// we do for lags; for the "first" exposure for a given date, class, and sensor,
+// where there is no preceding timestamp that can be used to compute the exposure,
+// we will singly-impute the exposure to be the most common exposure time.
+// 85.5% of exposures are about 300000ms (5 mins) and 14.5% are about
+// 600000ms (10 mins), and there are 3 observations of about 20 mins.
+bysort date class sensor (time): generate exposure = time - time[_n - 1]
+tempvar F most_common
+tab exposure , sort matrow(`F')
+scalar `most_common' = `F'[1,1]
+replace exposure = `most_common' if missing(exposure)
+replace exposure = exposure / 60000 // Convert exposure to minutes.
+
+
+
+
+
 
 
 
