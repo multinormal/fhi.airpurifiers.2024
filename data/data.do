@@ -6,9 +6,9 @@ use "${data_file}", replace
 datasignature
 assert r(datasignature) == "${signature}"
 
-// Define the outcome variable.
+// Define the primary outcome variable.
 rename pm2_5 y
-label variable y "PM2.5 (outcome)"
+label variable y "PM2.5 (primary outcome)"
 count if missing(y)
 assert r(N) == 0
 
@@ -42,9 +42,8 @@ label variable time "Date and time"
 
 // Drop hour, etc. because the time variable specifies
 // date and time to a resolution of at least 1 second.
-// TODO: REINSTATE drop hour min min_round min_round_hms tid_norsk_normaltid
+drop hour min min_round min_round_hms tid_norsk_normaltid
 // TODO: What does time_diff code for?
-
 
 // Generate a lagged version of y; need to do this by sensor within
 // class within date, in order of time.
@@ -60,5 +59,21 @@ count if missing(y_lagged)
 scalar missing_y_lagged = r(N)
 levelsof date
 assert r(r) * 3 * 2 == missing_y_lagged
+
+// Generate a factor variable that identifies each missing lag, so that
+// these values can be estimated (section 8.2 of the SAP).
+tempvar undefined_lags
+generate `undefined_lags' = "nonmissing"
+replace  `undefined_lags' = "missing " + string(_n) if missing(y_lagged)
+encode   `undefined_lags' , generate(undefined_lags)
+label variable undefined_lags "Missing lags for y" // TODO: Update label when we define VOC?
+local base = "nonmissing":`: value label undefined_lags'
+fvset base `base' undefined_lags
+
+
+
+
+
+
 
 
