@@ -7,9 +7,8 @@ datasignature
 assert r(datasignature) == "${signature}"
 
 // Define the primary outcome variable.
-rename pm2_5 y
-label variable y "PM2.5 (primary outcome)"
-count if missing(y)
+label variable pm2_5 "PM2.5 (primary outcome)"
+count if missing(pm2_5)
 assert r(N) == 0
 
 // TODO: It looks like Airthings provides counts (integers) and Digiref provides reals. How to handle?
@@ -50,31 +49,31 @@ drop hour min min_round min_round_hms tid_norsk_normaltid
 // Generate a lagged version of y; need to do this by sensor within
 // class within date, in order of time.
 sort time
-bysort date class sensor (time): generate y_lagged = y[_n - 1]
-label variable y_lagged "Lagged PM2.5"
+bysort date class sensor (time): generate pm2_5_lagged = pm2_5[_n - 1]
+label variable pm2_5_lagged "Lagged PM2.5"
 // Verify that the number of missing lags is as expected. We expect one
 // missing lag at the start of each day for each individual sensor. The study
 // ran for 9 weeks, with 5 days per week, with 3 classrooms, and 2 sensors
 // per class. This suggests 9*5*3*2 = 45 days * 3*2 = 270 missing lags. However,
 // the data actually contain only 44 unique dates (days), giving 44*3*2 = 264 
 // missing lags.
-count if missing(y_lagged)
-scalar missing_y_lagged = r(N)
+count if missing(pm2_5_lagged)
+scalar missing_pm2_5_lagged = r(N)
 levelsof date
-assert r(r) * 3 * 2 == missing_y_lagged
+assert r(r) * 3 * 2 == missing_pm2_5_lagged
 
 // Generate a factor variable that identifies each missing lag, so that
 // these values can be estimated (section 8.2 of the SAP).
 tempvar undefined_lags
 generate `undefined_lags' = "nonmissing"
-replace  `undefined_lags' = "missing " + string(_n) if missing(y_lagged)
+replace  `undefined_lags' = "missing " + string(_n) if missing(pm2_5_lagged)
 encode   `undefined_lags' , generate(undefined_lags)
-label variable undefined_lags "Missing lags for y" // TODO: Update label when we define VOC?
+label variable undefined_lags "Missing lags for PM2.5" // TODO: Update label when we define VOC?
 local base = "nonmissing":`: value label undefined_lags'
 fvset base `base' undefined_lags
 
 // Set the undefined (i.e., missing) lags to zero.
-replace y_lagged = 0 if missing(y_lagged)
+replace pm2_5_lagged = 0 if missing(pm2_5_lagged)
 
 // Generate an exposure variable. We anticipated in the SAP having start and
 // end times for the measurements to define the exposures, but we only have
