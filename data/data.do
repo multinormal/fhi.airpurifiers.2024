@@ -73,6 +73,9 @@ label variable undefined_lags "Missing lags for y" // TODO: Update label when we
 local base = "nonmissing":`: value label undefined_lags'
 fvset base `base' undefined_lags
 
+// Set the undefined (i.e., missing) lags to zero.
+replace y_lagged = 0 if missing(y_lagged)
+
 // Generate an exposure variable. We anticipated in the SAP having start and
 // end times for the measurements to define the exposures, but we only have
 // timestamps. We will therefore compute the exposures in the same way as
