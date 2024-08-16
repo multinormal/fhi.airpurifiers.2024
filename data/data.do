@@ -21,6 +21,7 @@ replace  treatment = 2 if luftrensing == "Ceiling"
 replace  treatment = 3 if luftrensing == "Portable"
 label define treatment 1 "None" 2 "Ceiling" 3 "Portable"
 label values treatment treatment
+label variable treatment "Treatment"
 count if missing(treatment)
 assert r(N) == 0
 drop luftrensing
@@ -33,6 +34,7 @@ replace sensor = 1 if `sensor' == "Airthings"
 replace sensor = 2 if `sensor' == "Digiref"
 label define sensor 1 "Airthings" 2 "Digiref"
 label values sensor sensor
+label variable sensor "Sensor"
 count if missing(sensor)
 assert r(N) == 0
 
@@ -49,6 +51,7 @@ drop hour min min_round min_round_hms tid_norsk_normaltid
 // class within date, in order of time.
 sort time
 bysort date class sensor (time): generate y_lagged = y[_n - 1]
+label variable y_lagged "Lagged PM2.5"
 // Verify that the number of missing lags is as expected. We expect one
 // missing lag at the start of each day for each individual sensor. The study
 // ran for 9 weeks, with 5 days per week, with 3 classrooms, and 2 sensors
@@ -70,6 +73,7 @@ label variable undefined_lags "Missing lags for y" // TODO: Update label when we
 local base = "nonmissing":`: value label undefined_lags'
 fvset base `base' undefined_lags
 
+
 // Generate an exposure variable. We anticipated in the SAP having start and
 // end times for the measurements to define the exposures, but we only have
 // timestamps. We will therefore compute the exposures in the same way as
@@ -84,19 +88,23 @@ tab exposure , sort matrow(`F')
 scalar `most_common' = `F'[1,1]
 replace exposure = `most_common' if missing(exposure)
 replace exposure = exposure / 60000 // Convert exposure to minutes.
+label variable exposure "Exposure (mins)"
 
+// Label unlabelled variables. TODO
+label variable class "Class"
+label variable weekday "Weekday"
+label variable no_students "Number of students"
+label variable out_temp_mean "Mean outside temperature"
+label variable soundlevela "Sound level" // TODO: Why-a? Used?
 
+// Drop unused/duplicated variables. TODO
+assert school == class // We can drop school.
+drop school
+foreach x in navn stasjon {
+  levelsof `x' , missing // Count missing, too.
+  assert r(r) == 1 // Constant across all observations.
+  drop `x'
+}
 
-
-
-
-
-
-
+// TODO: Do we need any of the unlabelled variables?
 // TODO: Ensure all variables are labelled.
-
-
-
-
-
-
