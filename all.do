@@ -1,12 +1,13 @@
-version 16.1
+version 18
 
 // Clear everything and set up logging.
 clear all
 log close _all
-log using products/log.smcl, name("TODO Log Title") replace
+log using products/log.smcl, name("Air purifiers") replace
 
 // Set up globals.
 do globals/globals
+do globals/models
 
 // Set up Stata.
 do setup/setup
@@ -16,6 +17,8 @@ do data/data
 
 // Do estimation.
 do estimation/estimate
+
+exit // TODO: Work in progress
 
 // Make figures
 do figures/figures
