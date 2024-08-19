@@ -1,15 +1,20 @@
 version 18
 
-// Define the covariates.
-local covariates i.treatment i.sensor pm2_5_lagged i.undefined_lags
-
 // Define the VCE option.
 local vce vce(cluster class)
+
+// Define the exposure option.
+local exp exposure(exposure)
 
 // Define the competing types of model:
 global model_types zinb nbreg poiss
 
-// Define the competing models for PM2.5:
-global pm2_5_zinb_model  zinb    pm2_5 `covariates' , exp(exposure) inf(_cons) irr `vce'
-global pm2_5_nbreg_model nbreg   pm2_5 `covariates' , exp(exposure)            irr `vce' difficult
-global pm2_5_poiss_model poisson pm2_5 `covariates' , exp(exposure)            irr `vce' difficult
+// Define the competing models for the outcomes:
+foreach y of global outcomes {
+  // Define the covariates.
+  local covs i.treatment i.sensor `y'_lagged i.`y'_lagged_undef
+
+  global `y'_zinb_model  zinb    `y' `covs' , `exp' inf(_cons) irr `vce'
+  global `y'_nbreg_model nbreg   `y' `covs' , `exp'            irr `vce' difficult
+  global `y'_poiss_model poisson `y' `covs' , `exp'            irr `vce' difficult
+}
