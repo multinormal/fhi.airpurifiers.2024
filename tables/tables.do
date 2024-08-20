@@ -1,5 +1,7 @@
 version 18
 
+// TODO: Make sure the numbers presented in the table are correct!
+
 // TODO: Eliminate the repetition here:
 
 // Clear all collections.
@@ -7,6 +9,7 @@ collect clear
 
 // Make a table for the main analyses.
 collect create main
+collect title "Estimates of treatment effect for the primary and secondary outcomes"
 
 // IRRs and means for pm2_5.
 collect irr = _r_b  cil = _r_lb ciu = _r_ub, tags(outcome[pm2_5]) : estimates restore pm2_5
@@ -50,7 +53,7 @@ collect label levels result psup "Superiority of air purification" pnon "Noninfe
 collect label levels result mean "Mean"
 
 // Label the irr levels of results.
-collect label levels result irr "Rate ratio"
+collect label levels result irr "RR"
 
 // Label cil and ciu
 collect label levels result cil "[95%" ciu "CI]"
