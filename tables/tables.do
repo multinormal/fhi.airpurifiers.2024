@@ -40,6 +40,9 @@ nlcom _b[voc:`port'.treatment] - _b[voc:`ceil'.treatment] , post
 scalar `sign' = sign(_b[_nl_1])
 collect pnon = normal(`sign'*sqrt(r(chi2))) , tags(outcome[voc]) : test _b[_nl_1] = $log_margin
 
+// Label the levels of the outcome dimension.
+collect label levels outcome pm2_5 $pm2_5_label voc $voc_label
+
 // Lay out the table.
 collect layout (outcome) (treatment#result[mean] treatment[2 3]#result[irr cil ciu] result[psup pnon])
 
@@ -48,7 +51,8 @@ collect style cell , nformat(%7.2f)
 collect style cell result[psup pnon] , nformat(%7.3f)
 collect style cell border_block, border(right, pattern(nil))
 
-collect style column , dups(center)
+collect style column , dups(center) // Center duplicated column titles.
+
 
 collect preview
 
