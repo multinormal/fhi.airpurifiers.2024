@@ -46,6 +46,9 @@ collect label levels outcome pm2_5 $pm2_5_label voc $voc_label
 // Label the p-value levels of results.
 collect label levels result psup "Superiority of air purification" pnon "Noninferiority (portable vs ceiling)"
 
+// Label the mean levels of results.
+collect label levels result mean "Mean"
+
 // Lay out the table.
 collect layout (outcome) (treatment#result[mean] treatment[2 3]#result[irr cil ciu] result[psup pnon])
 
