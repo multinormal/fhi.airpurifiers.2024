@@ -52,6 +52,9 @@ collect label levels result mean "Mean"
 // Label the irr levels of results.
 collect label levels result irr "Rate ratio"
 
+// Label cil and ciu
+collect label levels result cil "[95%" ciu "CI]"
+
 // Lay out the table.
 collect layout (outcome) (treatment#result[mean] treatment[2 3]#result[irr cil ciu] result[psup pnon])
 
