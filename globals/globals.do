@@ -11,3 +11,6 @@ global report_filename "products/report.docx"
 global outcomes pm2_5 voc
 global pm2_5_label "PM2.5"
 global voc_label   "VOC"
+
+// Define the margin for noninferiority analyses.
+global log_margin = 0.34 // See SAP section 8.4 
