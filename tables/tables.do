@@ -57,7 +57,8 @@ collect layout (outcome) (treatment#result[mean] treatment[2 3]#result[irr cil c
 
 // Style the table.
 collect style cell , nformat(%7.2f)
-collect style cell result[cil], nformat(%7.2f)
+collect style cell result[cil], nformat(%7.2f) sformat("[%s")
+collect style cell result[ciu], nformat(%7.2f) sformat("%s]")
 collect style cell result[psup pnon] , nformat(%7.3f) minimum(0.001)
 collect style cell border_block, border(right, pattern(nil))
 
