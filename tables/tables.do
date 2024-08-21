@@ -2,8 +2,6 @@ version 18
 
 // TODO: Make sure the numbers presented in the table are correct!
 
-// TODO: Eliminate the repetition here:
-
 // Clear all collections.
 collect clear
 
