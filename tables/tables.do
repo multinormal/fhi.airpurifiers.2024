@@ -10,6 +10,10 @@ collect clear
 // Make a table for the main analyses.
 collect create main
 collect title "Estimates of treatment effect for the primary and secondary outcomes"
+local notes "Sample means are unadjusted and do no account for the crossover design."
+local notes "`notes' Rate ratios (RRs) are adjusted for the crossover design, sensor type, first-order autocorrelation, and clustering within classroom."
+local notes "`notes' RR < 1 disfavors the reference (no air purification)." 
+collect notes "`notes'"
 
 // IRRs and means for pm2_5.
 collect irr = _r_b  cil = _r_lb ciu = _r_ub, tags(outcome[pm2_5]) : estimates restore pm2_5
@@ -69,6 +73,7 @@ collect style cell result[psup pnon] , nformat(%7.3f) minimum(0.001)
 collect style cell border_block, border(right, pattern(nil))
 collect style cell , font(, size(9))
 collect style column , dups(center) // Center duplicated column titles.
+collect style notes , font(, size(9) italic)
 collect style putdocx, layout(autofitcontents)
 
 
