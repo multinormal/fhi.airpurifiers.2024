@@ -64,4 +64,3 @@ collect style cell , font(, size(9))
 collect style column , dups(center) // Center duplicated column titles.
 collect style notes , font(, size(9) italic)
 collect style putdocx, layout(autofitcontents)
-
