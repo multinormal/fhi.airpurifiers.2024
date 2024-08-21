@@ -15,40 +15,31 @@ local notes "`notes' Rate ratios (RRs) are adjusted for the crossover design, se
 local notes "`notes' RR < 1 disfavors the reference (no air purification)." 
 collect notes "`notes'"
 
-// IRRs and means for pm2_5.
-collect irr = _r_b  cil = _r_lb ciu = _r_ub, tags(outcome[pm2_5]) : estimates restore pm2_5
-collect mean = _r_b , tags(outcome[pm2_5]) : mean pm2_5 , over(treatment)
+// Collect estimates of mean outcomes and of treatment effect.
+foreach y of global outcomes {
+  collect mean = _r_b                        , tags(outcome[`y']) : mean `y' , over(treatment)
+  collect irr = _r_b  cil = _r_lb ciu = _r_ub, tags(outcome[`y']) : estimates restore `y'
+}
 
-// IRRs and means for VOC.
-collect irr = _r_b  cil = _r_lb ciu = _r_ub, tags(outcome[voc])   : estimates restore voc
-collect mean = _r_b , tags(outcome[voc])   : mean voc , over(treatment)
-
-// Test for superiority of any air purification over no air purification.
-estimates restore pm2_5
+// Collect p-values for superiority of any air purification over no air purification.
 local port = "Portable" : `: value label treatment'
 local ceil = "Ceiling"  : `: value label treatment'
-collect psup = r(p) , tags(outcome[pm2_5]) : test _b[pm2_5:`port'.treatment] = _b[pm2_5:`ceil'.treatment] = 0
+foreach y of global outcomes {
+  estimates restore `y'
+  collect psup = r(p) , tags(outcome[`y']) : test _b[`y':`port'.treatment] = _b[`y':`ceil'.treatment] = 0
+}
 
-estimates restore voc
-local port = "Portable" : `: value label treatment'
-local ceil = "Ceiling"  : `: value label treatment'
-collect psup = r(p) , tags(outcome[voc]) : test _b[voc:`port'.treatment] = _b[voc:`ceil'.treatment] = 0
-
-// Test for noninferiority of portable versus ceiling.
+// Collect p-values for noninferiority of portable versus ceiling.
 tempname sign
-
-estimates restore pm2_5
-nlcom _b[pm2_5:`port'.treatment] - _b[pm2_5:`ceil'.treatment] , post
-scalar `sign' = sign(_b[_nl_1])
-collect pnon = normal(`sign'*sqrt(r(chi2))) , tags(outcome[pm2_5]) : test _b[_nl_1] = $log_margin
-
-estimates restore voc
-nlcom _b[voc:`port'.treatment] - _b[voc:`ceil'.treatment] , post
-scalar `sign' = sign(_b[_nl_1])
-collect pnon = normal(`sign'*sqrt(r(chi2))) , tags(outcome[voc]) : test _b[_nl_1] = $log_margin
+foreach y of global outcomes {
+  estimates restore `y'
+  nlcom _b[`y':`port'.treatment] - _b[`y':`ceil'.treatment] , post
+  scalar `sign' = sign(_b[_nl_1])
+  collect pnon = normal(`sign'*sqrt(r(chi2))) , tags(outcome[`y']) : test _b[_nl_1] = $log_margin  
+}
 
 // Label the levels of the outcome dimension.
-collect label levels outcome pm2_5 $pm2_5_label voc $voc_label
+collect label levels outcome ${outcome_labels}
 
 // Label the p-value levels of results.
 collect label levels result psup "Superiority of air purification" pnon "Noninferiority (portable vs ceiling)"
@@ -75,7 +66,4 @@ collect style cell , font(, size(9))
 collect style column , dups(center) // Center duplicated column titles.
 collect style notes , font(, size(9) italic)
 collect style putdocx, layout(autofitcontents)
-
-
-collect preview // TODO
 
