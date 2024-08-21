@@ -23,6 +23,8 @@ replace  treatment = 3 if luftrensing == "Portable"
 label define treatment 1 "None" 2 "Ceiling" 3 "Portable"
 label values treatment treatment
 label variable treatment "Treatment"
+local base = "None":`: value label treatment'
+fvset base `base' treatment
 count if missing(treatment)
 assert r(N) == 0
 drop luftrensing

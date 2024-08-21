@@ -48,6 +48,13 @@ putdocx textblock end
 `heading'
 putdocx text ("Results")
 
+`subhead '
+putdocx text ("Estimates of treatment effect for the primary and secondary analyses")
+collect set main
+putdocx collect
+
+
+
 `newpara'
 TODO: Add results.
 putdocx textblock end
