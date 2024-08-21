@@ -68,8 +68,8 @@ collect style cell result[ciu], nformat(%7.2f) sformat("%s]")
 collect style cell result[psup pnon] , nformat(%7.3f) minimum(0.001)
 collect style cell border_block, border(right, pattern(nil))
 collect style cell , font(, size(9))
-
 collect style column , dups(center) // Center duplicated column titles.
+collect style putdocx, layout(autofitcontents)
 
 
 collect preview // TODO
