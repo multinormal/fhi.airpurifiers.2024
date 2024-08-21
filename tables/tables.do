@@ -1,9 +1,5 @@
 version 18
 
-// TODO: 1. Make the table font 10pt
-// TODO: 2. Make the column and row headings bold.
-
-
 // TODO: Make sure the numbers presented in the table are correct!
 
 // TODO: Eliminate the repetition here:
@@ -71,6 +67,7 @@ collect style cell result[cil], nformat(%7.2f) sformat("[%s")
 collect style cell result[ciu], nformat(%7.2f) sformat("%s]")
 collect style cell result[psup pnon] , nformat(%7.3f) minimum(0.001)
 collect style cell border_block, border(right, pattern(nil))
+collect style cell , font(, size(9))
 
 collect style column , dups(center) // Center duplicated column titles.
 
