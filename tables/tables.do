@@ -30,12 +30,10 @@ foreach y of global outcomes {
 }
 
 // Collect p-values for noninferiority of portable versus ceiling.
-tempname sign
 foreach y of global outcomes {
   estimates restore `y'
   nlcom _b[`y':`port'.treatment] - _b[`y':`ceil'.treatment] , post
-  scalar `sign' = sign(_b[_nl_1])
-  collect pnon = normal(`sign'*sqrt(r(chi2))) , tags(outcome[`y']) : test _b[_nl_1] = $log_margin  
+  collect pnon = normal(sign(_b[_nl_1])*sqrt(r(chi2))) , tags(outcome[`y']) : test _b[_nl_1] = $log_margin  
 }
 
 // Label the levels of the outcome dimension.
