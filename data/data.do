@@ -1,5 +1,7 @@
 version 18
 
+// TODO: Define the PP set using the info in Cathinka's email of 22/8/24.
+
 // Load the data and check its signature is as expected.
 if "${data_file}" == "data/raw/TODO" exit // TODO: REMOVE THIS LINE
 use "${data_file}", replace
@@ -102,8 +104,15 @@ replace exposure = `most_common' if missing(exposure)
 replace exposure = exposure / 60000 // Convert exposure to minutes.
 label variable exposure "Exposure (mins)"
 
+// Generate a logged version of morning baseline PM2.5; the original variable
+// is quite skewed and cannot be included in the exploratory model. The +0.01
+// prevents generating undefined values.
+replace base_pm = log(base_pm + 0.01)
+label variable base_pm "Baseline morning PM2.5 (log scale)"
+
 // Label unlabelled variables. TODO
 label variable class "Class"
+label variable hum_comp "Indoor humidity (RH%)"
 label variable weekday "Weekday"
 label variable no_students "Number of students"
 label variable out_temp_mean "Mean outside temperature"

@@ -41,7 +41,16 @@ putdocx textblock end
 putdocx text ("Methods")
 
 `newpara'
-TODO: Write methods text.
+We performed a prespecified exploratory analysis to identify time-varying covariates that 
+may be associated with the primary outcome and assess the sensitivity of the treatment 
+effect estimates to these covariates. We used partialing-out lasso Poisson regression (Stata's 
+xpopoisson command) with the lasso penalty chosen using 10-fold cross-validation to 
+select among the following covariates: indoor relative humidity; the school's existing ventilation 
+system setting (low or high); weekday; baseline morning PM2.5 (modelled on the log scale); 
+number of students attending class; and mean outdoor temperature. The model would not converge 
+when we attempted to account for undefined lagged PM2.5 values, or if indoor temperature was 
+included. We could not include indoor CO2 or sound level because a large number of values were 
+missing for these variables.
 putdocx textblock end
 
 // Results section
@@ -53,11 +62,30 @@ putdocx text ("Estimates of treatment effect for the primary and secondary analy
 collect set main
 putdocx collect
 
+`subhead '
+putdocx text ("Exploratory time-varying covariate adjusted analysis")
 
+`newpara'
+The time-varying covariates selected by lasso were indoor relative humidity, weekday, baseline morning PM2.5, 
+and the school's existing ventilation system setting.
+putdocx textblock end
 
 `newpara'
 TODO: Add results.
 putdocx textblock end
+
+// Discussion
+`heading'
+putdocx text ("Discussion")
+
+`newpara'
+The results of the prespecified exploratory analysis should be interpreted cautiously because we 
+were unable to account for undefined lags and could not include all time-varying covariates. 
+Further, it was not possible to use a negative binomial model for this analysis, as was selected 
+over the Poisson model on the basis of AIC in the main analyses, because Stata does not currently 
+provide xpopoisson-like commands for negative binomial models.
+putdocx textblock end
+
 
 // References
 `heading'

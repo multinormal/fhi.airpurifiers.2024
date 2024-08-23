@@ -20,3 +20,8 @@ foreach y of global outcomes {
     }
   }
 }
+
+// Run the exploratory analysis.
+${exploratory_model}
+assert e(converged)
+estimates store exploratory
