@@ -17,6 +17,11 @@ foreach y of global outcomes {
 
 // TODO: It looks like Airthings provides counts (integers) and Digiref provides reals. How to handle?
 
+// Label the values of the per protocol analysis set indicator.
+label define pp_data 0 "Exclude" 1 "Include"
+label values pp_data pp_data
+label variable pp_data "Per protocol analysis set"
+
 // Define the treatment variable.
 generate treatment = .
 replace  treatment = 1 if luftrensing == "None"
