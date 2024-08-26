@@ -17,11 +17,11 @@ putdocx begin
 
 // Title.
 putdocx paragraph, style(Title)
-putdocx text ("TODO: Trial Name")
+putdocx text ("Air purifiers in classrooms for infection control: a pilot study")
 
 // Author and revision information.
 `newpara'
-TODO: Name and institution
+Chris Rose, Norwegian Institute of Public Health 
 (<<dd_docx_display: c(current_date)>>)
 putdocx textblock end
 `newpara'
@@ -33,7 +33,8 @@ putdocx textblock end
 putdocx text ("Introduction")
 
 `newpara'
-This document presents methods and results for the TODO trial.
+This document presents methods and results for part 2 of the pilot study on air purifiers in classrooms 
+for infection control (see https://zenodo.org/doi/10.5281/zenodo.12818264). 
 putdocx textblock end
 
 // Methods section
@@ -79,7 +80,7 @@ putdocx textblock end
 putdocx text ("Results")
 
 `subhead '
-putdocx text ("Estimates of treatment effect for the primary and secondary analyses")
+putdocx text ("Intention-to-treat estimates of treatment effect for the primary and secondary analyses")
 collect set itt
 putdocx collect
 
@@ -105,36 +106,18 @@ putdocx collect
 putdocx text ("Discussion")
 
 `newpara'
-The results of the prespecified exploratory analysis should be interpreted cautiously because we 
-were unable to account for undefined lags and could not include all time-varying covariates. 
-Further, it was not possible to use a negative binomial model for this analysis, as was selected 
-over the Poisson model on the basis of AIC in the main analyses, because Stata does not currently 
+Treatment effect estimates are consistent across the three analyses. Portable air purifiers are estimated 
+to be superior to no air purifiers with respect to PM2.5 but not VOC. For this reason, (any) air purification 
+is estimated to be superior to no air purification with respect to PM2.5. Portable air purifiers are estimated 
+to be noninferior to ceiling-mounted air purifiers (in fact, they appear to be superior to them).
+putdocx textblock end
+
+`newpara'
+The results of the prespecified exploratory analysis of the effect of time-varying covariates should be 
+interpreted cautiously because we were unable to account for undefined lags and could not include all 
+time-varying covariates. Further, it was not possible to use a negative binomial model for this analysis, 
+as was selected over the Poisson model on the basis of AIC in the main analyses, because Stata does not currently 
 provide xpopoisson-like commands for negative binomial models.
-putdocx textblock end
-
-
-// References
-`heading'
-putdocx text ("References")
-
-`newpara'
-TODO: Add references.
-putdocx textblock end
-
-// Appendices
-
-`heading'
-putdocx text ("Appendix 1 — Protocol Deviations")
-
-`newpara'
-TODO: Describe any protocol deviations.
-putdocx textblock end
-
-`heading'
-putdocx text ("Appendix 2 — Full Regression Results")
-
-`newpara'
-TODO: Present full regression tables.
 putdocx textblock end
 
 // Save the report to the specified filename.

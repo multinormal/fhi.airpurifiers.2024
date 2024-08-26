@@ -15,8 +15,6 @@ do setup/setup
 // Import and process the data.
 do data/data
 
-exit
-
 // Do estimation.
 do estimation/estimate
 

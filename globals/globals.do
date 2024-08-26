@@ -37,11 +37,6 @@ global exploratory_vars hum_comp vent_setting i.weekday base_pm no_students out_
 global itt_predicate if 1
 global pp_predicate  if pp_data
 
-// Define the table titles.
-global itt_table_title        "Estimates of treatment effect for the primary and secondary outcomes"
-global exploratory_table_title "Time-varying covariate adjusted estimates of treatment effect for the primary outcome"
-global pp_table_title          "Per-protocol estimates of treatment effect for the primary and secondary outcomes"
-
 // Define the table notes.
 local notes "Sample means are unadjusted and do no account for the crossover design."
 local notes "`notes' Rate ratios (RRs) are adjusted for the crossover design, sensor type, first-order autocorrelation, and clustering within classroom."
