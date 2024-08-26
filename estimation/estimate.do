@@ -34,5 +34,3 @@ foreach analysis in itt pp {
 ${exploratory_model}
 assert e(converged)
 estimates store exploratory_${exploratory_outcomes}
-
-// TODO: Run the per protocol analysis.

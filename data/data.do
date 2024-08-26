@@ -1,7 +1,5 @@
 version 18
 
-// TODO: Define the PP set using the info in Cathinka's email of 22/8/24.
-
 // Load the data and check its signature is as expected.
 use "${data_file}", replace
 datasignature
