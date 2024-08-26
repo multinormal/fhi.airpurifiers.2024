@@ -41,21 +41,38 @@ putdocx textblock end
 putdocx text ("Methods")
 
 `newpara'
-TODO: Explain rounding.
+All statistical analyses were performed as prespecified, except as noted, using Stata 18 (StataCorp LLC, 
+College Station, Texas, USA). We had expected both sensors to measure the primary and secondary outcomes 
+as counts, but the DigiRef sensor reported fractional counts. We therefore rounded these to integers. 
+Negative binomial regression was selected over zero-inflated negative binomial and Poisson models 
+for both the intention-to-treat (ITT) analyses of both outcomes on the basis of the Akaike information 
+criterion and was therefore also used for the per-protocol (PP) analyses, which excluded measurements 
+made when the air purifiers were not running as planned. All analyses accounted for the crossover design, 
+sensor type, first-order autocorrelation (lagged outcomes), and clustering within classroom via cluster-robust 
+standard errors. We used maximum pseudolikelihood in the ITT and PP analyses to estimate and hence account 
+for undefined lagged outcomes (e.g., the first measurement of the day). Exposure was defined as the 
+time between outcome measurements. Treatment effect was estimated as rate ratio (RR), where RR<1 
+disfavors the reference treatment of no air purification.
 putdocx textblock end
 
 `newpara'
-We performed a prespecified exploratory analysis to identify time-varying covariates that 
-may be associated with the primary outcome and assess the sensitivity of the treatment 
-effect estimates to these covariates. We used partialing-out lasso Poisson regression (Stata's 
-xpopoisson command) with the lasso penalty chosen using 10-fold cross-validation to 
-select among the following covariates: indoor relative humidity; the school's existing ventilation 
-system setting (low or high); weekday; baseline morning PM2.5 (modelled on the log scale); 
-number of students attending class; and mean outdoor temperature. The model would not converge 
-when we attempted to account for undefined lagged PM2.5 values, or if indoor temperature was 
-included. We could not include indoor CO2 or sound level because a large number of values were 
-missing for these variables.
+We used partialing-out lasso Poisson regression (Stata's xpopoisson command) to perform 
+a prespecified exploratory analysis to identify time-varying covariates that may be associated 
+with the primary outcome and assess the sensitivity of the treatment effect estimates to these 
+covariates. The lasso penalty was chosen using 10-fold cross-validation to select among the 
+following covariates: indoor relative humidity; the school's existing ventilation system setting 
+(low or high); weekday; baseline morning PM2.5 (modelled on the log scale); number of students 
+attending class; and mean outdoor temperature. We had planned to include indoor temperature and 
+indicators of undefined lagged PM2.5 but had to omit these due to nonconvergence. We had also 
+planned to include indoor CO2 and sound level but had to omit these because many values were missing.
 putdocx textblock end
+
+`newpara'
+Finally, we tested for superiority of any over no air purification, and for noninferiority of portable 
+versus ceiling-mounted air purifiers using a prespecified margin of RR=1.4. We report two-sided 95% 
+confidence intervals and use the conventional p<0.05 significance criterion throughout.
+putdocx textblock end
+
 
 // Results section
 `heading'
