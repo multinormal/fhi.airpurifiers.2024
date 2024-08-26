@@ -59,7 +59,12 @@ putdocx text ("Results")
 
 `subhead '
 putdocx text ("Estimates of treatment effect for the primary and secondary analyses")
-collect set main
+collect set itt
+putdocx collect
+
+`subhead '
+putdocx text ("Exploratory per-protocol estimates of treatment effect for the primary and secondary analyses")
+collect set pp
 putdocx collect
 
 `subhead '
