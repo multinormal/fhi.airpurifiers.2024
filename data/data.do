@@ -118,7 +118,7 @@ label variable exposure "Exposure (mins)"
 replace base_pm = log(base_pm + 0.01)
 label variable base_pm "Baseline morning PM2.5 (log scale)"
 
-// Label unlabelled variables. TODO
+// Label unlabelled variables.
 label variable class          "Class"
 label variable temp_comp      "Indoor temperature (°C)"
 label variable hum_comp       "Indoor humidity (RH%)"
@@ -126,7 +126,7 @@ label variable co2_comp       "Indoor CO2 (ppm)"
 label variable weekday        "Weekday"
 label variable no_students    "Number of students"
 label variable out_temp_mean "Mean outside temperature"
-label variable soundlevela   "Sound level" // TODO: Why-a? Used?
+label variable soundlevela   "Sound level"
 
 // Drop unused/duplicated variables.
 assert school == class // We can drop school.
