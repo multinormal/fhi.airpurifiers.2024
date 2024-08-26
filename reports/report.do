@@ -41,6 +41,10 @@ putdocx textblock end
 putdocx text ("Methods")
 
 `newpara'
+TODO: Explain rounding.
+putdocx textblock end
+
+`newpara'
 We performed a prespecified exploratory analysis to identify time-varying covariates that 
 may be associated with the primary outcome and assess the sensitivity of the treatment 
 effect estimates to these covariates. We used partialing-out lasso Poisson regression (Stata's 

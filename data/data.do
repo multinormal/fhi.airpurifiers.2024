@@ -7,6 +7,7 @@ assert r(datasignature) == "${signature}"
 
 // Define the outcome variables.
 foreach y of global itt_outcomes {
+  replace `y' = round(`y') // Ensure that all outcomes as counts.
   label variable `y' "${`y'_label} (outcome variable)"
   count if missing(`y')
   assert r(N) == 0
