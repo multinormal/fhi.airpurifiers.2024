@@ -3,7 +3,7 @@ version 18
 // Perform estimation; the models are competing for selection on the basis of AIC.
 tempname aic this_aic
 
-foreach y of global outcomes {
+foreach y of global main_outcomes {
   scalar `aic' = maxdouble()
   foreach model_type of global model_types {
     local model `y'_`model_type'_model
@@ -15,7 +15,7 @@ foreach y of global outcomes {
     estat ic
     scalar `this_aic' = r(S)[1,"AIC"]
     if `this_aic' < `aic' {
-      estimates store `y' // The best model is saved using the outcome variable name.
+      estimates store main_`y' // The best model is saved using the outcome variable name.
       scalar `aic' = `this_aic'
     }
   }
@@ -24,4 +24,6 @@ foreach y of global outcomes {
 // Run the exploratory analysis.
 ${exploratory_model}
 assert e(converged)
-estimates store exploratory
+estimates store exploratory_${exploratory_outcomes}
+
+// TODO: Run the per protocol analysis.
