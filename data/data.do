@@ -8,7 +8,7 @@ datasignature
 assert r(datasignature) == "${signature}"
 
 // Define the outcome variables.
-foreach y of global main_outcomes {
+foreach y of global itt_outcomes {
   label variable `y' "${`y'_label} (outcome variable)"
   count if missing(`y')
   assert r(N) == 0
@@ -59,7 +59,7 @@ drop hour min min_round min_round_hms tid_norsk_normaltid
 // Generate lagged versions of the outcomes; need to do this by sensor within
 // class within date, in order of time.
 sort time
-foreach y of global main_outcomes {
+foreach y of global itt_outcomes {
   bysort date class sensor (time): generate `y'_lagged = `y'[_n - 1]
   label variable `y'_lagged "Lagged ${`y'_label}"
 
@@ -77,7 +77,7 @@ foreach y of global main_outcomes {
 
 // For each outcome, generate a factor variable that identifies each missing lag,
 // so that these values can be estimated (section 8.2 of the SAP).
-foreach y of global main_outcomes {
+foreach y of global itt_outcomes {
   tempvar undefined_lags
   generate `undefined_lags' = "nonmissing"
   replace  `undefined_lags' = "missing " + string(_n) if missing(`y'_lagged)
@@ -88,7 +88,7 @@ foreach y of global main_outcomes {
 }
 
 // Set the undefined (i.e., missing) lags to zero.
-foreach y of global main_outcomes {
+foreach y of global itt_outcomes {
   replace `y'_lagged = 0 if missing(`y'_lagged)
 }
 
