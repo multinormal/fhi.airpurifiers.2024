@@ -21,8 +21,6 @@ do estimation/estimate
 // Make tables
 do tables/tables
 
-exit // TODO: Work in progress
-
 // TODO: Figures?
 // Make figures
 do figures/figures
