@@ -13,8 +13,6 @@ foreach y of global itt_outcomes {
   assert r(N) == 0
 }
 
-// TODO: It looks like Airthings provides counts (integers) and Digiref provides reals. How to handle?
-
 // Label the values of the per protocol analysis set indicator.
 label define pp_data 0 "Exclude" 1 "Include"
 label values pp_data pp_data
