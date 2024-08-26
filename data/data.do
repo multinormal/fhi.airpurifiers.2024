@@ -49,6 +49,12 @@ assert r(N) == 0
 rename tidspunkt time
 label variable time "Date and time"
 
+// Rename the ventilator speed variable and add a label to it;
+rename vent_hast vent_setting
+label variable vent_setting "School ventilation setting"
+label define vent_setting 0 "Low" 1 "High"
+label values vent_setting vent_setting
+
 // Drop hour, etc. because the time variable specifies
 // date and time to a resolution of at least 1 second.
 drop hour min min_round min_round_hms tid_norsk_normaltid
@@ -113,21 +119,21 @@ replace base_pm = log(base_pm + 0.01)
 label variable base_pm "Baseline morning PM2.5 (log scale)"
 
 // Label unlabelled variables. TODO
-label variable class "Class"
-label variable hum_comp "Indoor humidity (RH%)"
-label variable weekday "Weekday"
-label variable no_students "Number of students"
+label variable class          "Class"
+label variable temp_comp      "Indoor temperature (°C)"
+label variable hum_comp       "Indoor humidity (RH%)"
+label variable co2_comp       "Indoor CO2 (ppm)"
+label variable weekday        "Weekday"
+label variable no_students    "Number of students"
 label variable out_temp_mean "Mean outside temperature"
-label variable soundlevela "Sound level" // TODO: Why-a? Used?
+label variable soundlevela   "Sound level" // TODO: Why-a? Used?
 
-// Drop unused/duplicated variables. TODO
+// Drop unused/duplicated variables.
 assert school == class // We can drop school.
 drop school
-foreach x in navn stasjon {
+foreach x in navn stasjon operasjonstid {
   levelsof `x' , missing // Count missing, too.
   assert r(r) == 1 // Constant across all observations.
   drop `x'
 }
-
-// TODO: Do we need any of the unlabelled variables?
-// TODO: Ensure all variables are labelled.
+drop serialnumber date time_diff
