@@ -9,11 +9,11 @@ local vce vce(cluster class)
 // Define the exposure option.
 local exp exposure(exposure)
 
-// Define the competing types of model:
+// Define the competing types of model for the main table:
 global model_types zinb nbreg poiss
 
 // Define the competing models for the outcomes:
-foreach y of global outcomes {
+foreach y of global main_outcomes {
   // Define the covariates.
   local covs `indvars' `y'_lagged i.`y'_lagged_undef
 
@@ -34,3 +34,4 @@ local predicate pm2_5_lagged_undef == "nonmissing":pm2_5_lagged_undef
 // The model.
 global exploratory_model xpopoisson pm2_5 `indvars' if `predicate', `controls' `exp' `vce' xfolds(10) rseed(1234)
 
+// TODO: Define the per protocol analysis.
