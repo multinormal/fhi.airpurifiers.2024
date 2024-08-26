@@ -55,11 +55,6 @@ label variable vent_setting "School ventilation setting"
 label define vent_setting 0 "Low" 1 "High"
 label values vent_setting vent_setting
 
-// Drop hour, etc. because the time variable specifies
-// date and time to a resolution of at least 1 second.
-drop hour min min_round min_round_hms tid_norsk_normaltid
-// TODO: What does time_diff code for?
-
 // Generate lagged versions of the outcomes; need to do this by sensor within
 // class within date, in order of time.
 sort time
@@ -136,4 +131,9 @@ foreach x in navn stasjon operasjonstid {
   assert r(r) == 1 // Constant across all observations.
   drop `x'
 }
+
+// Drop hour, etc. because the time variable specifies
+// date and time to a resolution of at least 1 second.
+drop hour min min_round min_round_hms tid_norsk_normaltid
+// Drop other unused variables.
 drop serialnumber date time_diff
