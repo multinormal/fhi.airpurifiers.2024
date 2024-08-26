@@ -70,6 +70,9 @@ The time-varying covariates selected by lasso were indoor relative humidity, wee
 and the school's existing ventilation system setting.
 putdocx textblock end
 
+collect set exploratory
+putdocx collect
+
 `newpara'
 TODO: Add results.
 putdocx textblock end
