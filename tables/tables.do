@@ -14,11 +14,8 @@ foreach table of global tables {
   collect create `table'
 
   // TODO: Define titles and notes for the different tables.
-  collect title "Estimates of treatment effect for the primary and secondary outcomes"
-  local notes "Sample means are unadjusted and do no account for the crossover design."
-  local notes "`notes' Rate ratios (RRs) are adjusted for the crossover design, sensor type, first-order autocorrelation, and clustering within classroom."
-  local notes "`notes' RR < 1 disfavors the reference (no air purification)." 
-  collect notes "`notes'"
+  collect title ${`table'_table_title}
+  collect notes "${`table'_table_notes}"
   
   // Collect estimates of mean outcomes and of treatment effect.
   foreach y of global `table'_outcomes {

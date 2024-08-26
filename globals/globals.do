@@ -29,3 +29,22 @@ global log_margin = 0.34 // See SAP section 8.4
 
 // Define the variables to include in the exploratory analysis.
 global exploratory_vars hum_comp vent_hast i.weekday base_pm no_students out_temp_mean
+
+// Define the table titles.
+global main_table_title        "Estimates of treatment effect for the primary and secondary outcomes"
+global exploratory_table_title "Time-varying covariate adjusted estimates of treatment effect for the primary outcome"
+// TODO: Per protocol title.
+
+// Define the table notes.
+local notes "Sample means are unadjusted and do no account for the crossover design."
+local notes "`notes' Rate ratios (RRs) are adjusted for the crossover design, sensor type, first-order autocorrelation, and clustering within classroom."
+local notes "`notes' RR < 1 disfavors the reference (no air purification)."
+global main_table_notes "`notes'"
+
+local notes "Sample means are unadjusted and do no account for the crossover design."
+local notes "`notes' Rate ratios (RRs) are adjusted for the crossover design, sensor type, first-order autocorrelation,"
+local notes "`notes' the time-varying covariates selected by the cross-validated lasso, and clustering within classroom."
+local notes "`notes' RR < 1 disfavors the reference (no air purification)."
+global exploratory_table_notes "`notes'"
+
+// TODO: Per protocol notes
