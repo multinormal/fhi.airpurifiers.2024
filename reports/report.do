@@ -68,7 +68,7 @@ planned to include indoor CO2 and sound level but had to omit these because many
 putdocx textblock end
 
 `newpara'
-Finally, we tested for superiority of any over no air purification, and for noninferiority of portable 
+Finally, we tested for superiority of any versus no air purification, and for noninferiority of portable 
 versus ceiling-mounted air purifiers using a prespecified margin of RR=1.4. We report two-sided 95% 
 confidence intervals and use the conventional p<0.05 significance criterion throughout.
 putdocx textblock end
@@ -99,9 +99,6 @@ putdocx textblock end
 collect set exploratory
 putdocx collect
 
-`newpara'
-TODO: Add results.
-putdocx textblock end
 
 // Discussion
 `heading'
