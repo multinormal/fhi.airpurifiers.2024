@@ -7,12 +7,11 @@ assert r(datasignature) == "${signature}"
 
 // Define the outcome variables.
 foreach y of global itt_outcomes {
+  replace `y' = round(`y') // Ensure that all outcomes as counts.
   label variable `y' "${`y'_label} (outcome variable)"
   count if missing(`y')
   assert r(N) == 0
 }
-
-// TODO: It looks like Airthings provides counts (integers) and Digiref provides reals. How to handle?
 
 // Label the values of the per protocol analysis set indicator.
 label define pp_data 0 "Exclude" 1 "Include"
@@ -49,10 +48,11 @@ assert r(N) == 0
 rename tidspunkt time
 label variable time "Date and time"
 
-// Drop hour, etc. because the time variable specifies
-// date and time to a resolution of at least 1 second.
-drop hour min min_round min_round_hms tid_norsk_normaltid
-// TODO: What does time_diff code for?
+// Rename the ventilator speed variable and add a label to it;
+rename vent_hast vent_setting
+label variable vent_setting "School ventilation setting"
+label define vent_setting 0 "Low" 1 "High"
+label values vent_setting vent_setting
 
 // Generate lagged versions of the outcomes; need to do this by sensor within
 // class within date, in order of time.
@@ -112,22 +112,27 @@ label variable exposure "Exposure (mins)"
 replace base_pm = log(base_pm + 0.01)
 label variable base_pm "Baseline morning PM2.5 (log scale)"
 
-// Label unlabelled variables. TODO
-label variable class "Class"
-label variable hum_comp "Indoor humidity (RH%)"
-label variable weekday "Weekday"
-label variable no_students "Number of students"
+// Label unlabelled variables.
+label variable class          "Class"
+label variable temp_comp      "Indoor temperature (°C)"
+label variable hum_comp       "Indoor humidity (RH%)"
+label variable co2_comp       "Indoor CO2 (ppm)"
+label variable weekday        "Weekday"
+label variable no_students    "Number of students"
 label variable out_temp_mean "Mean outside temperature"
-label variable soundlevela "Sound level" // TODO: Why-a? Used?
+label variable soundlevela   "Sound level"
 
-// Drop unused/duplicated variables. TODO
+// Drop unused/duplicated variables.
 assert school == class // We can drop school.
 drop school
-foreach x in navn stasjon {
+foreach x in navn stasjon operasjonstid {
   levelsof `x' , missing // Count missing, too.
   assert r(r) == 1 // Constant across all observations.
   drop `x'
 }
 
-// TODO: Do we need any of the unlabelled variables?
-// TODO: Ensure all variables are labelled.
+// Drop hour, etc. because the time variable specifies
+// date and time to a resolution of at least 1 second.
+drop hour min min_round min_round_hms tid_norsk_normaltid
+// Drop other unused variables.
+drop serialnumber date time_diff

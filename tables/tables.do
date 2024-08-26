@@ -1,7 +1,5 @@
 version 18
 
-// TODO: Make sure the numbers presented in the table are correct!
-
 // Clear all collections.
 collect clear
 
@@ -13,8 +11,6 @@ local ceil = "Ceiling"  : `: value label treatment'
 foreach table of global tables {
   collect create `table'
 
-  // TODO: Define titles and notes for the different tables.
-  collect title ${`table'_table_title}
   collect notes "${`table'_table_notes}"
   
   // Collect estimates of mean outcomes and of treatment effect.
