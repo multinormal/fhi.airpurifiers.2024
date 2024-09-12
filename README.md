@@ -15,4 +15,4 @@ The code generates a report in Word format in the `products` directory. Git is u
 
 ## Running the analysis
 
-Once the software requirements above are satisfied, you can run the analysis by setting Stata's current working directory to the directory into which you cloned the repository, and then running `do all`. The analysis will `clear all`, so be sure to save any unsaved Stata work before running the analysis. A report containing the results will be written to `products/report.docx`.
+Once the software requirements above are satisfied, you can run the analysis by setting Stata's current working directory to the directory into which you cloned the repository, and then running `do all`. The analysis will `clear all`, so be sure to save any unsaved Stata work before running the analysis. A report containing the results will be written to `products/report.docx`.
