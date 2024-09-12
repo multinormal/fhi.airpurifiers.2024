@@ -1,5 +1,10 @@
 version 18
 
+// The processed data file.
+global processed_data_file      "data/raw/airpurifiers.dta"
+global processed_data_signature "17953:21(39106):2520784948:3078238665"
+
+// The raw data file.
 global data_file "data/raw/alldata_act_sp_comp.dta"
 global signature "17953:28(88255):4076654981:2522187636"
 

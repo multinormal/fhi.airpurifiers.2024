@@ -1,5 +1,6 @@
 
 .DS_Store
 data/raw/*.dta
+!data/raw/airpurifiers.dta
 products/~$*.docx
 products/log.smcl

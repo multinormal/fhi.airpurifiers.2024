@@ -1,5 +1,15 @@
 version 18
 
+// If the processed and anonymized data file is available, use that.
+if fileexists("${processed_data_file}") {
+  use "${processed_data_file}" , replace
+  datasignature
+  assert r(datasignature) == "${processed_data_signature}"
+  exit
+}
+
+// Otherwise process the raw data.
+
 // Load the data and check its signature is as expected.
 use "${data_file}", replace
 datasignature
@@ -43,6 +53,7 @@ label values sensor sensor
 label variable sensor "Sensor"
 count if missing(sensor)
 assert r(N) == 0
+drop `sensor'
 
 // Rename the time variable and add a label to it;
 rename tidspunkt time
@@ -53,6 +64,17 @@ rename vent_hast vent_setting
 label variable vent_setting "School ventilation setting"
 label define vent_setting 0 "Low" 1 "High"
 label values vent_setting vent_setting
+
+// The school and class variables are identical, so drop school.
+assert school == class
+drop school
+
+// Anonymize class names.
+tempvar class
+rename class `class'
+encode `class' , generate(class)
+drop `class'
+label drop class
 
 // Generate lagged versions of the outcomes; need to do this by sensor within
 // class within date, in order of time.
@@ -83,6 +105,7 @@ foreach y of global itt_outcomes {
   label variable `y'_lagged_undef "Missing lags for ${`y'_label}"
   local base = "nonmissing":`: value label `y'_lagged_undef'
   fvset base `base' `y'_lagged_undef
+  drop `undefined_lags'
 }
 
 // Set the undefined (i.e., missing) lags to zero.
@@ -123,8 +146,6 @@ label variable out_temp_mean "Mean outside temperature"
 label variable soundlevela   "Sound level"
 
 // Drop unused/duplicated variables.
-assert school == class // We can drop school.
-drop school
 foreach x in navn stasjon operasjonstid {
   levelsof `x' , missing // Count missing, too.
   assert r(r) == 1 // Constant across all observations.
@@ -136,3 +157,6 @@ foreach x in navn stasjon operasjonstid {
 drop hour min min_round min_round_hms tid_norsk_normaltid
 // Drop other unused variables.
 drop serialnumber date time_diff
+
+// Save the processed data.
+save data/raw/airpurifiers.dta , replace
