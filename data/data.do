@@ -54,6 +54,16 @@ label variable vent_setting "School ventilation setting"
 label define vent_setting 0 "Low" 1 "High"
 label values vent_setting vent_setting
 
+// The school and class variables are identical, so drop school.
+assert school == class
+drop school
+
+// Anonymize class names.
+tempvar class
+rename class `class'
+encode `class' , generate(class)
+label drop class
+
 // Generate lagged versions of the outcomes; need to do this by sensor within
 // class within date, in order of time.
 sort time
@@ -123,8 +133,6 @@ label variable out_temp_mean "Mean outside temperature"
 label variable soundlevela   "Sound level"
 
 // Drop unused/duplicated variables.
-assert school == class // We can drop school.
-drop school
 foreach x in navn stasjon operasjonstid {
   levelsof `x' , missing // Count missing, too.
   assert r(r) == 1 // Constant across all observations.
